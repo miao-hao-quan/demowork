@@ -14,6 +14,8 @@ public class LoginService {
         System.out.println("牛啊牛啊");
         System.out.println("master-1");
         System.out.println("master-2");
+        System.out.println("hot-fix-1");
+        System.out.println("hot-fix-2");
         return Exist;
     }
 
