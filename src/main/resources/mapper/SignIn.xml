@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.SignIn">
+
+    <select id="getStuMessage" resultType="studentInformation">
+        select * from studentlogin where id=#{id}
+    </select>
+
+    <select id="getStuSignMess" resultType="studentSignIn">
+        select * from studentsignin where stu_id=#{id}
+    </select>
+
+    <select id="getExit" resultType="Integer">
+        select count(*) from studentsignin where stu_id=#{stuId}
+    </select>
+
+    <update id="updateSign">
+      update studentsignin set stu_one=#{stuOne},stu_two=#{stuTwo},stu_three=#{stuThree},stu_four=#{stuFour},
+            stu_five=#{stuFive},stu_six=#{stuSix},stu_seven=#{stuSeven},stu_eight=#{stuEight},stu_nine=#{stuNine},
+            stu_ten=#{stuTen},stu_eleven=#{stuEleven},stu_date=#{stuDate} where stu_id=#{stuId}
+    </update>
+
+    <insert id="insertStuSign">
+        insert into studentsignin(stu_one,stu_two,stu_three,stu_four,stu_five,stu_six,stu_seven,stu_eight,stu_nine,stu_ten,stu_eleven,stu_date,stu_id) values (#{stuOne},#{stuTwo},#{stuThree},#{stuFour},#{stuFive},#{stuSix},#{stuSeven},#{stuEight},#{stuNine},#{stuTen},#{stuEleven},#{stuDate},#{stuId})
+    </insert>
+
+    <select id="getAll" resultType="adminSignIn">
+        select a.student_name,a.student_class,b.stu_date,b.stu_id from studentlogin a left join studentsignin b on a.id=b.stu_id and b.stu_date=#{date} order by convert(a.student_class using gbk),b.stu_date;
+    </select>
+</mapper>

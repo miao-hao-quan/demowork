@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.Information">
+    
+    <select id="getById" resultType="studentInformation">
+        select * from studentlogin where id=#{stu_id}
+    </select>
+
+    <select id="getAllStuByClassId" resultType="studentInformation">
+        select * from studentlogin where student_class=#{className}
+    </select>
+    <update id="updateById">
+        update studentlogin set student_username=#{studentUsername},student_name=#{studentName},student_gender=#{studentGender},student_nation=#{studentNation},
+        student_age=#{studentAge},student_college=#{studentCollege},student_class=#{studentClass},student_dormNum=#{studentDormNum} where id=#{id}
+    </update>
+
+    <select id="getAllClass" resultType="String">
+        SELECT DISTINCT student_class FROM studentlogin;
+    </select>
+
+    <select id="getAllCollege" resultType="String">
+        SELECT DISTINCT student_college FROM studentlogin;
+    </select>
+
+    <select id="getStuById" resultType="studentInformation">
+        select * from studentlogin where id=#{stuId}
+    </select>
+
+    <update id="updateStuById">
+        update studentlogin set student_username=#{studentUsername},student_password=#{studentPassword},student_name=#{studentName},student_gender=#{studentGender},student_nation=#{studentNation},
+        student_age=#{studentAge},student_college=#{studentCollege},student_class=#{studentClass},student_dormNum=#{studentDormNum} where id=#{id}
+    </update>
+
+    <insert id="insertStu">
+        insert into studentlogin(student_username,student_password,student_name,student_gender,student_nation,student_age,student_college,student_class,student_dormNum) values(#{studentUsername},#{studentPassword},#{studentName},#{studentGender},#{studentNation}, #{studentAge},#{studentCollege},#{studentClass},#{studentDormNum});
+    </insert>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.Risk">
+    <resultMap id="riskmap" type="riskArea">
+        <id property="id" column="id"></id>
+        <result property="province" column="province"></result>
+        <result property="city" column="city"></result>
+        <result property="address" column="address"></result>
+        <association property="riskLevel" javaType="riskLevel">
+            <id property="id" column="level_id"></id>
+            <result property="name" column="level_name"></result>
+        </association>
+    </resultMap>
+    <select id="getHighRisk" resultMap="riskmap">
+        select a.id id,a.province province,a.city city,a.address address,b.id level_id,b.name level_name from  risk_area a join risk_level b on a.level_id = b.id and b.id=1
+    </select>
+
+    <select id="getMediumRisk" resultMap="riskmap">
+        select a.id id,a.province province,a.city city,a.address address,b.id level_id,b.name level_name from  risk_area a join risk_level b on a.level_id = b.id and b.id=2
+    </select>
+
+    <select id="getRiskAreaById" resultMap="riskmap">
+        select a.id id,a.province province,a.city city,a.address address,b.id level_id,b.name level_name from  risk_area a join risk_level b on a.level_id = b.id and a.id=#{id}
+    </select>
+
+    <update id="updateArea">
+        update risk_area set province=#{province},city=#{city},address=#{address},level_id=#{riskLevel.id} where id=#{id}
+    </update>
+    <delete id="delArea">
+        delete from risk_area where id=#{id}
+    </delete>
+    <insert id="insertArea">
+        insert into risk_area(province,city,address,level_id) values(#{province},#{city},#{address},#{riskLevel.id})
+    </insert>
+</mapper>

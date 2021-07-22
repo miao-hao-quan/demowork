@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.Temperature">
+        <resultMap id="temperatureMap" type="studentTemperature">
+            <id column="id" property="id"></id>
+            <result column="stu_id" property="stu_id"></result>
+            <result column="morning_temperature" property="morning_temperature"></result>
+            <result column="evening_temperature" property="evening_temperature"></result>
+            <result column="ipt_date" property="ipt_date"></result>
+        </resultMap>
+        <select id="getAllTemperature" resultMap="temperatureMap">
+            select id,stu_id,morning_temperature,evening_temperature,ipt_date from temperature where ipt_date&lt;curdate() and stu_id=#{id} order by ipt_date desc;
+        </select>
+    <insert id="insertMorningTemperature">
+        insert into temperature(morning_temperature,ipt_date,stu_id) values(#{morningTemperature},#{date},#{stu_id})
+    </insert>
+
+    <insert id="insertEveningTemperature">
+        insert into temperature(evening_temperature,ipt_date,stu_id) values(#{eveningTemperature},#{date},#{stu_id})
+    </insert>
+
+    <select id="getDatetem" resultType="Integer">
+        select count(*) from temperature where ipt_date=#{date} and stu_id=#{stu_id}
+    </select>
+
+    <update id="updateEveningtem">
+        update temperature set evening_temperature=#{eveningTemperature} where stu_id=#{stu_id} and ipt_date=#{date}
+    </update>
+
+    <select id="getTodaytem" resultMap="temperatureMap">
+        select id,stu_id,morning_temperature,evening_temperature,ipt_date from temperature where stu_id=#{stu_id} and ipt_date=#{date}
+    </select>
+    <resultMap id="adminTemperatureMap" type="adminTemperature">
+        <id column="stu_id" property="stu_id"></id>
+        <result column="student_name" property="student_name"></result>
+        <result column="student_class" property="student_class"></result>
+        <result column="morning_temperature" property="morning_temperature"></result>
+        <result column="evening_temperature" property="evening_temperature"></result>
+    </resultMap>
+
+    <select id="getTodayAllTem" resultMap="adminTemperatureMap">
+        select a.id stu_id,a.student_name student_name,a.student_class student_class,b.morning_temperature morning_temperature,b.evening_temperature evening_temperature from studentlogin a left join temperature b on a.id=b.stu_id and b.ipt_date=#{date} order by convert(a.student_class using gbk),b.evening_temperature desc,b.morning_temperature desc;
+    </select>
+
+    <select id="getTodayTemById" resultMap="adminTemperatureMap">
+        select a.id stu_id,a.student_name student_name,b.morning_temperature morning_temperature,b.evening_temperature evening_temperature from studentlogin a join temperature b on a.id=b.stu_id and b.stu_id=#{stu_id} and b.ipt_date=#{date}
+    </select>
+
+    <insert id="insertTodayTem">
+        insert into temperature(morning_temperature,evening_temperature,ipt_date,stu_id) values(#{morningTem},#{eveningTem},#{date},#{stu_id})
+    </insert>
+
+    <update id="updateTodayTem">
+        update temperature set morning_temperature=#{morningTem},evening_temperature=#{eveningTem} where ipt_date=#{date} and stu_id=#{stu_id}
+    </update>
+</mapper>
