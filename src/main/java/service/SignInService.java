@@ -20,6 +20,7 @@ public class SignInService {
     }
 
     public StudentSignIn getStuSignMess(Integer id) {
+        System.out.println("第二");
         return signIn.getStuSignMess(id);
     }
 
