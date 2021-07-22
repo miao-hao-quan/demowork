@@ -12,6 +12,8 @@ public class LoginService {
     public int studentJudgeExist(String username) {
         int Exist = login.stuJudgeExist(username);
         System.out.println("牛啊牛啊");
+        System.out.println("hot-fix-1");
+        System.out.println("hot-fix-2");
         return Exist;
     }
 
